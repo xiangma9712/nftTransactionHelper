@@ -1,0 +1,29 @@
+{
+  "name": "nfttransactionhelper",
+  "version": "1.0.0",
+  "description": "ERC721 token transaction helper",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "up-local-ethereum": "bash test/runLocalEthereum.sh",
+    "down-local-ethereum": "docker stop localethereum",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "ts-node test/debug.ts"
+  },
+  "keywords": [
+    "ERC721",
+    "web3",
+    "helper"
+  ],
+  "author": "s.koike",
+  "license": "MIT",
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.3.0",
+    "web3": "^1.3.5"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  }
+}
