@@ -1,6 +1,6 @@
 {
   "name": "nfttransactionhelper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "ERC721 token transaction helper",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
