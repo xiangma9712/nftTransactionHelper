@@ -1,6 +1,6 @@
 import HDWalletProvider from '@truffle/hdwallet-provider';
 import Web3 from 'web3';
-import { Contract } from 'web3-eth-contract';
+import { Contract, SendOptions } from 'web3-eth-contract';
 import erc721abi from './lib/abi';
 
 class nftTransactionHelper {
@@ -59,7 +59,7 @@ class nftTransactionHelper {
      */
     public async isOwner(tokenId: string): Promise<boolean> {
         const owner = await this.getOwner(tokenId);
-        return owner === this.getAddress();
+        return owner.toLowerCase() === this.getAddress().toLowerCase();
     }
 
     /**
@@ -91,7 +91,7 @@ class nftTransactionHelper {
      */
     public async transfer(toAddress: string, tokenId: string): Promise<string> {
         if (this.isInitialized(this.contract)) {
-            const txHash = await this.contract.methods.transfer(tokenId, toAddress).send();
+            const txHash = await this.contract.methods.transfer(tokenId, toAddress).send(this.getSendOption());
             return String(txHash);
         }
         throw new Error('Contract not initialized');
@@ -105,7 +105,7 @@ class nftTransactionHelper {
      */
     public async approve(toAddress: string, tokenId: string): Promise<string> {
         if (this.isInitialized(this.contract)) {
-            const txHash = await this.contract.methods.approve(toAddress, tokenId).send();
+            const txHash = await this.contract.methods.approve(toAddress, tokenId).send(this.getSendOption());
             return String(txHash);
         }
         throw new Error('Contract not initialized');
@@ -123,7 +123,7 @@ class nftTransactionHelper {
         if (this.isInitialized(this.contract)) {
             if (this.isApproved(tokenId)) throw new Error('You are not approved to execute transaction');
             const method = option?.useSafeTransferFrom ? 'safeTransferFrom' : 'transferFrom';
-            const txHash = await this.contract.methods[method](fromAddress, toAddress, tokenId).send();
+            const txHash = await this.contract.methods[method](fromAddress, toAddress, tokenId).send(this.getSendOption());
             return String(txHash);
         }
         throw new Error('Contract not initialized');
@@ -137,7 +137,7 @@ class nftTransactionHelper {
     public async setApprovalForAll(operator: string): Promise<string> {
         if (this.isInitialized(this.contract)) {
             if (this.isApprovedForAll(operator)) throw new Error('Already Approved');
-            const txHash = await this.contract.methods.setApprovalForAll(operator, true).send();
+            const txHash = await this.contract.methods.setApprovalForAll(operator, true).send(this.getSendOption());
             return String(txHash);
         }
         throw new Error('Contract not initialized');
@@ -164,6 +164,12 @@ class nftTransactionHelper {
 
     private isInitialized(contract: Contract | undefined): contract is Contract {
         return this.provider !== undefined && this.contract !== undefined;
+    }
+
+    private getSendOption():SendOptions {
+        return {
+            from: this.getAddress()
+        }
     }
 }
 
