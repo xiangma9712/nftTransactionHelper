@@ -5,5 +5,5 @@ export const mainAccount = {
 
 export const subAccount = {
     mnemonic: 'elder alley vapor warm school double lizard since burger machine space police',
-    address: '0x432d4da3fcecda336e430b2750d04bb484a5a38f',
+    address: '0x432D4dA3fCeCDa336e430b2750d04BB484A5A38f',
 }

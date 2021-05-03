@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 import HDWalletProvider from '@truffle/hdwallet-provider';
 import * as fs from 'fs';
-import {mainAccount} from '../testAccount';
+import {mainAccount, subAccount} from '../testAccount';
 const mnemonic = mainAccount.mnemonic;
 const url = 'http://localhost:8545';
 const compileResult = JSON.parse(fs.readFileSync('./test/env/MyNftLibrary.json', 'UTF-8'));
@@ -10,6 +10,7 @@ export const setup = async () => {
     const client = new Web3();
     const provider = new HDWalletProvider(mnemonic, url);
     client.setProvider(provider);
+    client.eth.sendTransaction({from: mainAccount.address, to: subAccount.address, value: 10 * 10 ** 18 });
     const contractBeforeDeploy = new client.eth.Contract(compileResult.abi);
     const contract = await contractBeforeDeploy
         .deploy({data: compileResult.bytecode})

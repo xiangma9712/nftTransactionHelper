@@ -39,7 +39,7 @@ declare class nftTransactionHelper {
      */
     getBalance(): Promise<number>;
     /**
-     * same as defined in EIP721
+     * transferFrom used internally.
      * @param toAddress
      * @param tokenId
      * @returns txHash
@@ -75,9 +75,15 @@ declare class nftTransactionHelper {
      */
     isApprovedForAll(operator: string): Promise<boolean>;
     /**
-     * Stop HD wallet provider engine. Make sure to call this method after all transactions have done.
+     * @param owner
+     * @returns if user is approved by the address for all
+     */
+    isApprovedForAllBy(owner: string): Promise<boolean>;
+    /**
+     * Stop HD wallet provider engine. Make sure to call this method when all is done.
      */
     end(): void;
     private isInitialized;
+    private getSendOption;
 }
 export default nftTransactionHelper;
