@@ -8,6 +8,7 @@
     "build": "tsc",
     "prepare": "npm run build",
     "up-local-ethereum": "bash test/runLocalEthereum.sh",
+    "postup-local-ethereum": "ts-node test/env/checkStatus.ts",
     "down-local-ethereum": "docker stop localethereum",
     "test": "mocha --require ts-node/register --watch-extensions ts \"test/test.ts\"",
     "debug": "ts-node test/debug.ts"
