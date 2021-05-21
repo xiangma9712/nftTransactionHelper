@@ -7,7 +7,7 @@ async function waitUntilContainerReady(seconds: number): Promise<void> {
     const promises: Promise<unknown>[] = [];
     promises.push((async () => {
         sleep(seconds * 1000);
-        throw new Error('Fial to check test env status');
+        console.error('Fial to check test env status');
     })());
     promises.push((async () => {
         while(true) {
@@ -24,4 +24,4 @@ async function waitUntilContainerReady(seconds: number): Promise<void> {
     await Promise.race(promises);
 }
 
-waitUntilContainerReady(30);
+waitUntilContainerReady(60);
